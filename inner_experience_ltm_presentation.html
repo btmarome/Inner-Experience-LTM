@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Inner Experience Presentation</title>
+    <script src="https://unpkg.com/jspsych@7.3.4" type="text/javascript"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-call-function@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.4"></script>
+    <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <style>
+    </style>
+  </head>
+  <body></body>
+  <script>
+
+
+    /*--------------------------------------------INITIALIZATION--------------------------------------------*/
+
+
+    // initializing JsPsych
+    var jsPsych = initJsPsych({
+        override_safe_mode: true,
+        on_finish: function() {
+            jsPsych.data.displayData();
+        }
+    });
+
+
+    /*--------------------------------------------VARIABLE DECLARATION--------------------------------------------*/
+
+
+    // listing images that will be used in trials
+    var image_stimuli = [
+        { stimulus: 'FIGRIM/sun_aaofphpvkeqlhwgu.jpg' },
+        { stimulus: 'FIGRIM/sun_aargjckpqizjlath.jpg' },
+        { stimulus: 'FIGRIM/sun_aasazkdidicwjsvv.jpg' },
+        { stimulus: 'FIGRIM/sun_aawlazprqrjhwtpa.jpg' },
+        { stimulus: 'FIGRIM/sun_aazqzpomyylceich.jpg' },
+        { stimulus: 'FIGRIM/sun_abchldffyzrykkwt.jpg' },
+        { stimulus: 'FIGRIM/sun_abcppolmjdrtjmev.jpg' },
+        { stimulus: 'FIGRIM/sun_abwbbibjamkycqvp.jpg' },
+        { stimulus: 'FIGRIM/sun_adayphpxynntilqc.jpg' },
+        { stimulus: 'FIGRIM/sun_admzmthmjgmaimfo.jpg' },
+        { stimulus: 'FIGRIM/sun_adgbprucwegckehq.jpg' },
+        { stimulus: 'FIGRIM/sun_adysrrgnddvmloix.jpg' },
+        { stimulus: 'FIGRIM/sun_aeexmpppqflyfmjn.jpg' },
+        { stimulus: 'FIGRIM/sun_aflsnycseiotupac.jpg' },
+        { stimulus: 'FIGRIM/sun_afrxrafufcfxrtoi.jpg' },
+        { stimulus: 'FIGRIM/sun_aggtgalfwqduodph.jpg' },
+        { stimulus: 'FIGRIM/sun_ahaknlgftjqgkcae.jpg' },
+        { stimulus: 'FIGRIM/sun_ahhnjksmytmbzmmp.jpg' },
+        { stimulus: 'FIGRIM/sun_aikqfdkgudsaclpg.jpg' },
+        { stimulus: 'FIGRIM/sun_aimafjvqvgcizssk.jpg' },
+        { stimulus: 'FIGRIM/sun_aisecutumiowdpll.jpg' },
+        { stimulus: 'FIGRIM/sun_ajcovinkacqkefec.jpg' },
+        { stimulus: 'FIGRIM/sun_ajlpekbqvytdohqb.jpg' },
+        { stimulus: 'FIGRIM/sun_ajpqtqfwriojkdkc.jpg' },
+        { stimulus: 'FIGRIM/sun_ajrvfrddsfxranuo.jpg' },
+        { stimulus: 'FIGRIM/sun_akjxzdcdwzfximmk.jpg' },
+        { stimulus: 'FIGRIM/sun_akxxgzkyvjbywjfx.jpg' },
+        { stimulus: 'FIGRIM/sun_allyzeegmzmqzkya.jpg' },
+        { stimulus: 'FIGRIM/sun_amagqndvvlvclvaa.jpg' },
+        { stimulus: 'FIGRIM/sun_avmugnsrzkxzvyrs.jpg' },
+        { stimulus: 'FIGRIM/sun_axqfhuboqdsqyblh.jpg' },
+        { stimulus: 'FIGRIM/sun_aygkoljubkyhhycy.jpg' },
+        { stimulus: 'FIGRIM/sun_ayuquurjulxlnkjc.jpg' },
+        { stimulus: 'FIGRIM/sun_azkaltevhhcogwys.jpg' },
+        { stimulus: 'FIGRIM/sun_bahxqtkjfddkgvgk.jpg' },
+        { stimulus: 'FIGRIM/sun_azwrgnzyeobohhhv.jpg' },
+        { stimulus: 'FIGRIM/sun_bagsogdyzikrwoja.jpg' },
+        { stimulus: 'FIGRIM/sun_bassdjddcuglcdgd.jpg' },
+        { stimulus: 'FIGRIM/sun_bazeryuujnfjfgwc.jpg' },
+        { stimulus: 'FIGRIM/sun_bbooxjlzamkluyta.jpg' },
+        { stimulus: 'FIGRIM/sun_bbgzuwnafsiyobtr.jpg' },
+        { stimulus: 'FIGRIM/sun_bcanxwxacwqfxkbf.jpg' },
+        { stimulus: 'FIGRIM/sun_bcdqgpzumsmvknfn.jpg' },
+        { stimulus: 'FIGRIM/sun_bciwhkffbduessdt.jpg' },
+        { stimulus: 'FIGRIM/sun_bcsvhigmjfsunagu.jpg' },
+        { stimulus: 'FIGRIM/sun_bfgthdpzwpuxxcpe.jpg' },
+        { stimulus: 'FIGRIM/sun_bewsiexlgmunlxps.jpg' },
+        { stimulus: 'FIGRIM/sun_bfvmjlomfvojcjbf.jpg' },
+        { stimulus: 'FIGRIM/sun_bgflqwdzjqmjrhor.jpg' },
+        { stimulus: 'FIGRIM/sun_bivbjkdbxmkncqwv.jpg' },
+        { stimulus: 'FIGRIM/sun_bgfszxxfoivehzze.jpg' },
+        { stimulus: 'FIGRIM/sun_bljymfxujgbxjuvx.jpg' },
+        { stimulus: 'FIGRIM/sun_bmtbldypepqtfcha.jpg' },
+        { stimulus: 'FIGRIM/sun_bltxnjuempwrfypr.jpg' },
+        { stimulus: 'FIGRIM/sun_boiucgzivwosmqhd.jpg' },
+        { stimulus: 'FIGRIM/sun_brvopxqzbbmiggcc.jpg' },
+        { stimulus: 'FIGRIM/sun_bswrcddsdaymohah.jpg' },
+        { stimulus: 'FIGRIM/sun_btwbhwvpmznjsvus.jpg' },
+        { stimulus: 'FIGRIM/sun_bwexgztjsyvkxzwk.jpg' },
+        { stimulus: 'FIGRIM/sun_bxxtkmyydusifqkv.jpg' }
+    ];
+
+    // listing words that will be used in trials
+    var word_stimuli = [
+        { stimulus: 'AIRCRAFT' },
+        { stimulus: 'ANIMAL' },
+        { stimulus: 'ASPIRIN' },
+        { stimulus: 'BALCONY' },
+        { stimulus: 'BILL' },
+        { stimulus: 'CHAIN' },
+        { stimulus: 'CORN' },
+        { stimulus: 'COWBOY' },
+        { stimulus: 'DOCUMENT' },
+        { stimulus: 'DRIVER' },
+        { stimulus: 'ELEVATOR' },
+        { stimulus: 'EXPERT' },
+        { stimulus: 'FEATHER' },
+        { stimulus: 'FORK' },
+        { stimulus: 'FOUNTAIN' },
+        { stimulus: 'FUGITIVE' },
+        { stimulus: 'GALAXY' },
+        { stimulus: 'GHOST' },
+        { stimulus: 'GLUE' },
+        { stimulus: 'HEART' },
+        { stimulus: 'HOOK' },
+        { stimulus: 'INSECT' },
+        { stimulus: 'ITEM' },
+        { stimulus: 'JAM' },
+        { stimulus: 'JOURNAL' },
+        { stimulus: 'LAMB' },
+        { stimulus: 'LIZARD' },
+        { stimulus: 'LIMOUSINE' },
+        { stimulus: 'MAGICIAN' },
+        { stimulus: 'MASK' },
+        { stimulus: 'METEOR' },
+        { stimulus: 'MINER' },
+        { stimulus: 'MUSEUM' },
+        { stimulus: 'NIECE' },
+        { stimulus: 'NOTEBOOK' },
+        { stimulus: 'OATMEAL' },
+        { stimulus: 'OZONE' },
+        { stimulus: 'PARIS' },
+        { stimulus: 'PEPPER' },
+        { stimulus: 'PIE' },
+        { stimulus: 'PLUM' },
+        { stimulus: 'ROOSTER' },
+        { stimulus: 'ROPE' },
+        { stimulus: 'SCALPEL' },
+        { stimulus: 'SHEARS' },
+        { stimulus: 'SLUG' },
+        { stimulus: 'SWAN' },
+        { stimulus: 'TAVERN' },
+        { stimulus: 'TICK' },
+        { stimulus: 'TWINE' },
+        { stimulus: 'TYPEWRITER' },
+        { stimulus: 'UMPIRE' },
+        { stimulus: 'VAULT' },
+        { stimulus: 'VILLAIN' },
+        { stimulus: 'VIRUS' },
+        { stimulus: 'WALLET' },
+        { stimulus: 'WATERFALL' },
+        { stimulus: 'WHIP' },
+        { stimulus: 'YOLK' },
+        { stimulus: 'ZEBRA' }
+    ];
+    
+    // mind-wandering probe
+    var probeQuestions = {
+        type: jsPsychSurveyLikert,
+        questions: [
+        {
+          prompt: "Just prior to the onset of this screen, I was thinking about...",
+          name: "Task Related",
+          labels: ["the task",
+          "everyday things",
+          "my current state of being",
+          "personal worries", 
+          "daydreams",
+          "my external environment",
+          "other"],
+          required: true,
+          horizontal: true
+        },
+        {
+          prompt: "I was guiding my thoughts.",
+          name: "Guidance",
+          labels: [
+            "Completely unguided",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Completely guided",
+          ],
+          required: true,
+          horizontal: true
+        },
+        {
+          prompt: "I was aware of my thoughts.",
+          name: "Awareness",
+          labels: [
+            "No awareness",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Complete awareness",
+          ],
+          required: true,
+          horizontal: true
+        },
+        {
+          prompt: "My thoughts were focused on inner speech.",
+          name: "Inner Speech",
+          labels: [
+            "No inner speech",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Lots of inner speech",
+          ],
+          required: true,
+          horizontal: true
+        },
+        {
+          prompt: "My thoughts were focused on visual imagery.",
+          name: "Inner Imagery",
+          labels: [
+            "No visual imagery",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Lots of visual imagery",
+          ],
+          required: true,
+          horizontal: true
+        },
+        {
+          prompt: "My thoughts were focused on auditory imagery.",
+          name: "Inner Auditory",
+          labels: [
+            "No auditory imagery",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Lots of auditory imagery",
+          ],
+          required: true,
+          horizontal: true
+        },
+        {
+          prompt: "My thoughts were focused on bodily sensation.",
+          name: "Bodily Sensation",
+          labels: [
+            "No bodily sensation",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Lots of bodily sensation",
+          ],
+          required: true,
+          horizontal: true
+        },
+        {
+          prompt: "My thoughts were focused on a particular emotion.",
+          name: "Inner Emotion",
+          labels: [
+            "No inner emotion",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Lots of inner emotion",
+          ],
+          required: true,
+          horizontal: true
+        }],
+        data: {
+            probe: 1,
+        },
+    };
+
+    var timeline = []; // primary timeline
+
+    var imageIndex = 0; // study phase image index
+
+    var imageIndex2 = 0; // recognition phase image index
+
+    var oldImages = []; // stores images seen in study phase
+
+    var wordIndex = 0; // study phase word index
+
+    var wordIndex2 = 0; // recognition phase word index
+
+    var oldWords = []; // stores words seen in study phase
+
+    var probabilityMW; // probability of a probe appearing
+
+    var studyBlock1; // first of two randomized study blocks
+
+    var studyBlock2; // second of two randomized study blocks
+
+    var scale1; // first of two randomized scales
+
+    var scale2; // second of two randomized scales
+
+    // shuffles test stimuli once for study phase, once for recognition phase
+    var shuffledImages = jsPsych.randomization.shuffle(image_stimuli);
+
+    var shuffledImages2 = jsPsych.randomization.shuffle(image_stimuli);
+
+    var shuffledWords = jsPsych.randomization.shuffle(word_stimuli);
+
+    var shuffledWords2 = jsPsych.randomization.shuffle(word_stimuli);
+
+    // defines labels for cognitive wisdom items; Q1-Q8 uses 1, Q9-Q14 uses 2 
+    var wisdomLabels1 = ["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"];
+    
+    var wisdomLabels2 = ["Definitely true of myself", "Mostly true of myself", "Unsure", "Mostly untrue of myself", "Definitely untrue of myself"];
+    
+    // defines labels for VVIQ items
+    var vividnessLabels = [
+        "No image at all, I only “know” I am thinking of the object",
+        "Dim and vague image",
+        "Moderately realistic and vivid",
+        "Realistic and reasonably vivid",
+        "Perfectly realistic, as vivid as real seeing"
+    ];
+
+    
+    /*--------------------------------------------INTRODUCTION--------------------------------------------*/
+
+
+    // preloading images
+    var preload = {
+        type: jsPsychPreload,
+        images: [
+            'FIGRIM/sun_aaofphpvkeqlhwgu.jpg',
+            'FIGRIM/sun_aargjckpqizjlath.jpg',
+            'FIGRIM/sun_aasazkdidicwjsvv.jpg',
+            'FIGRIM/sun_aawlazprqrjhwtpa.jpg',
+            'FIGRIM/sun_aazqzpomyylceich.jpg',
+            'FIGRIM/sun_abchldffyzrykkwt.jpg',
+            'FIGRIM/sun_abcppolmjdrtjmev.jpg',
+            'FIGRIM/sun_abwbbibjamkycqvp.jpg',
+            'FIGRIM/sun_adayphpxynntilqc.jpg',
+            'FIGRIM/sun_adgbprucwegckehq.jpg',
+            'FIGRIM/sun_admzmthmjgmaimfo.jpg',
+            'FIGRIM/sun_adysrrgnddvmloix.jpg',
+            'FIGRIM/sun_aeexmpppqflyfmjn.jpg',
+            'FIGRIM/sun_aflsnycseiotupac.jpg',
+            'FIGRIM/sun_afrxrafufcfxrtoi.jpg',
+            'FIGRIM/sun_aggtgalfwqduodph.jpg',
+            'FIGRIM/sun_ahaknlgftjqgkcae.jpg',
+            'FIGRIM/sun_ahhnjksmytmbzmmp.jpg',
+            'FIGRIM/sun_aikqfdkgudsaclpg.jpg',
+            'FIGRIM/sun_aimafjvqvgcizssk.jpg',
+            'FIGRIM/sun_aisecutumiowdpll.jpg',
+            'FIGRIM/sun_ajcovinkacqkefec.jpg',
+            'FIGRIM/sun_ajlpekbqvytdohqb.jpg',
+            'FIGRIM/sun_ajpqtqfwriojkdkc.jpg',
+            'FIGRIM/sun_ajrvfrddsfxranuo.jpg',
+            'FIGRIM/sun_akjxzdcdwzfximmk.jpg',
+            'FIGRIM/sun_akxxgzkyvjbywjfx.jpg',
+            'FIGRIM/sun_allyzeegmzmqzkya.jpg',
+            'FIGRIM/sun_amagqndvvlvclvaa.jpg',
+            'FIGRIM/sun_avmugnsrzkxzvyrs.jpg',
+            'FIGRIM/sun_axqfhuboqdsqyblh.jpg',
+            'FIGRIM/sun_aygkoljubkyhhycy.jpg',
+            'FIGRIM/sun_ayuquurjulxlnkjc.jpg',
+            'FIGRIM/sun_azkaltevhhcogwys.jpg',
+            'FIGRIM/sun_azwrgnzyeobohhhv.jpg',
+            'FIGRIM/sun_bagsogdyzikrwoja.jpg',
+            'FIGRIM/sun_bahxqtkjfddkgvgk.jpg',
+            'FIGRIM/sun_bassdjddcuglcdgd.jpg',
+            'FIGRIM/sun_bazeryuujnfjfgwc.jpg',
+            'FIGRIM/sun_bbgzuwnafsiyobtr.jpg',
+            'FIGRIM/sun_bbooxjlzamkluyta.jpg',
+            'FIGRIM/sun_bcanxwxacwqfxkbf.jpg',
+            'FIGRIM/sun_bcdqgpzumsmvknfn.jpg',
+            'FIGRIM/sun_bciwhkffbduessdt.jpg',
+            'FIGRIM/sun_bcsvhigmjfsunagu.jpg',
+            'FIGRIM/sun_bewsiexlgmunlxps.jpg',
+            'FIGRIM/sun_bfgthdpzwpuxxcpe.jpg',
+            'FIGRIM/sun_bfvmjlomfvojcjbf.jpg',
+            'FIGRIM/sun_bgflqwdzjqmjrhor.jpg',
+            'FIGRIM/sun_bgfszxxfoivehzze.jpg',
+            'FIGRIM/sun_bivbjkdbxmkncqwv.jpg',
+            'FIGRIM/sun_bljymfxujgbxjuvx.jpg',
+            'FIGRIM/sun_bltxnjuempwrfypr.jpg',
+            'FIGRIM/sun_bmtbldypepqtfcha.jpg',
+            'FIGRIM/sun_boiucgzivwosmqhd.jpg',
+            'FIGRIM/sun_brvopxqzbbmiggcc.jpg',
+            'FIGRIM/sun_bswrcddsdaymohah.jpg',
+            'FIGRIM/sun_btwbhwvpmznjsvus.jpg',
+            'FIGRIM/sun_bwexgztjsyvkxzwk.jpg',
+            'FIGRIM/sun_bxxtkmyydusifqkv.jpg'
+        ],
+        auto_preload: true,
+        message: 'Please wait while the experiment loads...',
+        // don't stop the experiment if there are file loading errors or if loading times out
+        continue_after_error: true 
+    };
+    
+    // welcome message for users
+    var welcome = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "Welcome to the experiment. Press any key to begin."
+    };
+    
+    // consent form
+    var consentForm = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+                <p> Before continuing, please read the consent form below. Select 'I agree' if you consent. If not, you may exit the experiment page.</p>
+                <p><small><strong>Purpose:</strong> You are being asked to participate in a research study. The purpose of the study is to test the effects of mind-wandering on memory. Specifically, we are interested in whether distinct types of mind-wandering differentially impair memory depending on the type of stimuli being studied.</p>
+                <p><strong>Procedures:</strong> If you decide to participate, you will study a set of words and images, complete a short working memory task, complete a memory test, and fill out some demographic/survey questions. This study requires a time commitment of 1 hour. There will only be a single experimental session with no follow-up procedures. We intend on administering this experiment to ~75 subjects.</p>
+                <p><strong>Benefits:</strong> There are no direct benefits to participating in this project.</p>
+                <p><strong>Risks:</strong> There are no anticipated risks to participating in this project.</p>
+                <p><strong>Confidentiality:</strong> The data we collect will be linked to your email address. We will promptly de-identify all data after the study is complete. After this research is completed, we may want to present some of the data at conferences and share data collected as part of this research with other universities or researchers for future research purposes. We also plan on uploading all data, fully anonymized, to a publicly-accessible repository for open science practices.</p>
+                <p><strong>Costs/Payments Section:</strong> You will either receive 1 SONA credit or a $10 Amazon gift card for completing the experiment. If you withdraw from the study before its completion, you will still be awarded the full payment/credit. </p>
+                <p><strong>Right to Refuse or Withdraw:</strong> You can refuse to take part in this project and you can stop participating at any time.  You can skip questions or refuse to complete any items in the questionnaire. You have the right to receive a copy of this consent form.</p>
+                <p><strong>Contact Information:</strong> If you have questions about the research, you may contact the lead researchers by email or phone. You can reach Brecken Marome at btmarome@ucsb.edu or (661) 313-1061 and Shivang Shelat at sshelat@ucsb.edu or (510) 921-4256. You may also contact the principal investigator for this study at jschooler@ucsb.edu or (805) 893-2383. If you have any questions regarding your rights as a research subject, please contact the Human Subjects Committee at (805) 893-3807 or hsc@research.ucsb.edu. Or write to the University of California, Human Subjects Committee, Office of Research, Santa Barbara, CA 93106-2050.</small></p>
+                `,
+            choices: ['I Agree']
+        };
+
+    // gathering email and other demographics to be deidentified later; email is for gift card distribution
+    var demographics = {
+        type: jsPsychSurveyHtmlForm,
+        preamble: "<p>Please respond to the following questions:</p>",
+        html: `
+            <p><label for='age'>Age: </label><input type='text' name='age' /></p>
+            <p>Gender: 
+                <label><input type='radio' name='gender' value='male' /> Male</label>
+                <label><input type='radio' name='gender' value='female' /> Female</label>
+                <label><input type='radio' name='gender' value='other' /> Other</label>
+                <label for='gender'><br>If other, please specify:<br></label><input type='text' name='gender' />
+            </p>
+            <p><label for='email'>For completing this experiment, you will be awarded a $10 Amazon Gift Card Code.<br>Please enter an email address we may contact you at:<br></label><input type='text' name='email' /></p>
+            `,
+        button_label: "Submit"
+    };
+
+    // instructions preceding practice probe
+    var instructionsPreProbe = {
+      type: jsPsychInstructions,
+      pages: [
+        "In the first phase of this experiment, you will study a set of either images or words.<br><br>One by one, each image/word will linger on the screen for a few seconds.<br><b>You should memorize each as much as you can. You will be tested on them later!</b><br><br>",
+        "At random moments, you will be interrupted by a probe that asks you to indicate the focus of your thoughts just before the survey appeared.<br><br>On the next page, you'll see an example of this probe. Please respond to each item and continue.<br><br>",
+      ],
+      show_clickable_nav: true,
+    };
+
+    // response-guiding examples preceding practice 
+    var probeExamples = {
+      type: jsPsychInstructions,
+      pages: [
+        "The next few pages will explain when you should select <b>each of the probe options</b>.<br><br>",
+        "For the first question:<br><br><b>The task</b> should be selected when you're focused on studying the images.<br><b>Everyday things</b> should be selected when you're thinking about routine events in the recent or distant past or future.<br><b>Current state of being</b> should be selected when you're thinking about physical or emotional states.<br><b>Personal worries</b> should be selected when you're thinking about life concerns.<br><b>Daydreams</b> should be selected when you're thinking about fantasies or thoughts disconnected from reality.<br><b>External environment</b> should be selected when you're thinking about objects or task-unrelated events in the room.<br><b>Other</b> should be selected when you're thinking about anything that was not captured by the other choices.<br><br>",
+        "Thoughts with high 'guidance' are thoughts that you are controlling (i.e., not spontaneous and not freely moving).<br>Thoughts with high 'awareness' are thoughts that you had explicit knowledge of.<br><br>",
+        "Thoughts with high 'inner speech' are for when you are internally talking to yourself using words that you could report. <br>Thoughts with high 'visual imagery' are ones where you have the visual experience of a mental image.<br>Thoughts of 'auditory imagery' have a sound quality, like a tune in your head.<br>Thoughts on 'bodily sensation' are for when you're focusing on a pain or itch in your foot, for example.<br>Thoughts with a lot of 'emotion' are those that are strongly valenced (e.g., sad or happy).<br><br>Make sure to evaluate your thoughts on each of these categories. They can belong to multiple of these at one time!<br><br>",
+        "If you feel ready to study the images and respond accurately to the probes, you may move forward. <br>If not, you should re-read the examples.<br><br>"
+      ],
+      show_clickable_nav: true,
+    };
+
+    var encodingIntro = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt:
+            "You will now start the memorization phase. Please respond to the following checks.<br>I'm in a quiet room, free from distractions.",
+          name: "distractionQ",
+          options: ["Yes", "No"],
+          required: true,
+        },
+        {
+          prompt:
+            "I will not leave the page during the experiment. (It may pause your progress!)",
+          name: "leavePageQ",
+          options: ["Yes", "No"],
+          required: true,
+        },
+        {
+          prompt: "I will select 'No' to show that I'm paying attention to this question.",
+          name: "attentionCheckQ",
+          options: ["Yes", "No"],
+          required: true,
+        },
+        {
+          prompt: "I'm ready to begin!",
+          name: "readyQ",
+          options: ["Yes", "No"],
+          required: true,
+        },
+      ],
+      post_trial_gap: 300,
+    };
+
+   
+    /*--------------------------------------------STUDY PHASE--------------------------------------------*/
+
+
+    // instructions for users to complete task
+    var studyInstructions = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+            <p>Press any key to begin studying the stimuli. They will remain on screen for a few seconds each.</p>
+        `,
+        // set gap before first trial appears
+        post_trial_gap: 2000
+    };
+
+    // outputs indexed image of shuffled image array, starting at zero
+    var imagePresent = {
+        type: jsPsychImageKeyboardResponse,
+        stimulus: function() {
+            return shuffledImages[imageIndex].stimulus;
+        },
+        choices: "NO_KEYS",
+        stimulus_width: 500,
+        stimulus_height: 500,
+        trial_duration: 100,
+        post_trial_gap: 100,
+        data: {
+            task: 'Image Study'
+        },
+        // stores "used" images in array for evaluating recognition test accuracy
+        on_finish: function () {
+            oldImages.push(shuffledImages[imageIndex].stimulus);
+            // increases index to prepare for next run-through
+            imageIndex ++;
+        },
+    };
+
+    // outputs indexed word of shuffled word array, starting at 0
+    var wordPresent = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function() {
+            return '<p style = "font-size:50px;">' + shuffledWords[wordIndex].stimulus + '</p>';
+        },
+        choices: "NO_KEYS",
+        trial_duration: 100,
+        post_trial_gap: 100,
+        data: {
+            task: 'Word Study'
+        },
+        // stores "used" words in array for evaluating recognition test accuracy
+        on_finish: function () {
+            oldWords.push(shuffledWords[wordIndex].stimulus);
+            // increases index to prepare for next run-through
+            wordIndex ++;
+        },
+    };
+    
+    
+    /*--------------------------------------------PROBE LOGIC--------------------------------------------*/
+
+
+    // aids in random distribution of probe; 0 <= probabilityMW < 1
+    var probeProbability = function () {
+        probabilityMW = Math.random();
+    };
+
+    // timeline variable to call the function
+    var probeProbabilityFxn = {
+        type: jsPsychCallFunction,
+        func: probeProbability,
+    };
+
+    // randomly implements the probe after 2 or 3 images in each 3-image block
+    var after2 = {
+        timeline: [probeQuestions],
+        conditional_function: function () {
+            if (probabilityMW < 0.50) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+    };
+
+    var after3 = {
+        timeline: [probeQuestions],
+        conditional_function: function () {
+            if (probabilityMW >= 0.50) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+    };
+
+    /*--------------------------------------------DIGIT-SPAN TASK--------------------------------------------*/
+
+
+
+
+    
+    /*--------------------------------------------RECOGNITION TEST--------------------------------------------*/
+
+
+    // building recognition test for images, similar to study phase
+    var recognitionImages = {
+      type: jsPsychImageKeyboardResponse,
+      stimulus: function() {
+            return shuffledImages2[imageIndex2].stimulus;
+        },
+        prompt: "<p>Indicate how confidently you believe you have previously seen the stimulus.<br><br>Press 1 for 'High-confidence new'.<br>Press 2 for 'Low-confidence new'.<br>Press 3 for 'Low-confidence old'.<br>Press 4 for 'High-confidence old'.</p>",
+        choices: ['1','2','3','4'],
+        stimulus_width: 500,
+        stimulus_height: 500,
+        post_trial_gap: 500,
+        data: {
+            task: 'Image Recognition',
+        },
+        on_finish: function (data) {
+            // adds "presence" data, indicating whether the stimulus was old or new
+            if (oldImages.includes(shuffledImages2[imageIndex2].stimulus)) {
+                data.presence = 'old'
+            }
+            else {
+                data.presence = 'new'
+            };
+            // ensures iteration to next stimulus
+            imageIndex2 ++;
+        }
+    };
+
+    // building recognition test for words, similar to study phase
+    var recognitionWords = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function() {
+            return '<p style = "font-size:50px;">' + shuffledWords2[wordIndex2].stimulus + '</p>';
+        },
+        prompt: "<p>Indicate how confidently you believe you have previously seen the stimulus.<br><br>Press 1 for 'High-confidence new'.<br>Press 2 for 'Low-confidence new'.<br>Press 3 for 'Low-confidence old'.<br>Press 4 for 'High-confidence old'.</p>",
+        choices: ['1','2','3','4'],
+        stimulus_width: 500,
+        stimulus_height: 500,
+        post_trial_gap: 500,
+        data: {
+            task: 'Word Recognition',
+            presence: '',
+        },
+        on_finish: function (data) {
+            // adds "presence" data, indicating whether the stimulus was old or new
+            if (oldWords.includes(shuffledWords2[wordIndex2].stimulus)) {
+                data.presence = 'old'
+            }
+            else {
+                data.presence = 'new'
+            };
+            // ensures iteration to next stimulus
+            wordIndex2 ++;
+        }
+    };
+
+    
+    /*--------------------------------------------POST-QUESTIONNAIRES--------------------------------------------*/
+
+
+    // wisdom questions block 1
+    var wisdomQuestions1 = {
+        type: jsPsychSurveyLikert,
+        preamble: "<div><p class><strong>How strongly do you agree or disagree with the following statements?</strong></p></div>",
+        questions: [
+            {
+                prompt: "Ignorance is bliss.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "It is better to not know too much about things that cannot be changed.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "In this complicated world of ours, the only way we can know what’s going on is to rely on leaders or experts who can be trusted.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "There is only one right way to do anything.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "A person either knows the answer to a question or he/she doesn’t.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "You can classify almost all people as either honest or crooked.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "People are either good or bad.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "Life is basically the same most of the time.", 
+                labels: wisdomLabels1, 
+                required: true, 
+                horizontal: true
+            }
+        ]
+    };
+
+    // wisdom questions block 2
+    var wisdomQuestions2 = {
+        type: jsPsychSurveyLikert,
+        preamble: "<div><p class><strong>How much are the following statements true of yourself?</strong></p></div>",
+        questions: [
+            {
+                prompt: "A problem has little attraction for me if I don't think it has a solution.", 
+                labels: wisdomLabels2, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "I try to anticipate and avoid situations where there is a likely chance I will have to think in depth about something.", 
+                labels: wisdomLabels2, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "I prefer just to let things happen rather than try to understand why they turned out that way.", 
+                labels: wisdomLabels2, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "Simply knowing the answer rather than understanding the reasons for the answer to a problem is fine with me.", 
+                labels: wisdomLabels2, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "I am hesitant about making important decisions after thinking about them.", 
+                labels: wisdomLabels2, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "I often do not understand people's behavior.", 
+                labels: wisdomLabels2, 
+                required: true, 
+                horizontal: true
+            }
+        ]
+    };
+
+    // instructions for VVIQ
+    var vividnessInstructions = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+            <p>For each following scenario try to form a mental picture of the 
+            people, objects, or setting.</p><p>Your task is to rate how vivid the mental
+            picture is using a 5-point scale. If you do not have a</p><p>visual image, 
+            rate vividness as '1'.
+            <div>
+                <p class='small'>Only use '5' for mental pictures that are as vivid as <strong>real seeing</strong></p>.
+            </div>
+            <p>The rating scale is as follows:</p>
+            <p>1. No image at all, I only “know” I am thinking of the object</p>
+            <p>2. Dim and vague image</p>
+            <p>3. Moderately realistic and vivid</p>
+            <p>4. Realistic and reasonably vivid</p>
+            <p>5. Perfectly realistic, as vivid as real seeing</p>
+            <p>Press any key to begin.</p>
+        `,
+        // set gap before first trial appears
+        post_trial_gap: 1000
+    };
+
+    // VVIQ Block 1
+    var vividnessTrials1 = {
+        type: jsPsychSurveyLikert,
+        preamble: "<div><p class><strong>For the following questions, think of some relative or friend whom you frequently see (but who is not with you at present) and consider carefully the picture that comes before your mind's eye. Indicate how vividly you can imagine:</strong></p></div>",
+        questions: [
+            {
+                prompt: "The exact contour of face, head, shoulders, and body.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "Characteristic poses of head, attitudes of body, etc.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "The precise carriage, length of step, etc., in walking.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "The different colors worn in some familiar clothes.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            }
+        ],
+        post_trial_gap: 500
+    };
+
+    // VVIQ Block 2
+    var vividnessTrials2 = {
+        type: jsPsychSurveyLikert,
+        preamble: "<div><p class><strong>Visualize a rising sun. Consider carefully the picture that comes before your mind's eye. Indicate how vividly you imagine:</strong></p></div>",
+        questions: [
+            {
+                prompt: "The sun is rising above the horizon into a hazy sky.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "The sky clears and surrounds the sun with blueness.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "Clouds. A storm blows up, with flashes of lightning.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "A rainbow appears.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            }
+        ],
+        post_trial_gap: 500
+    };
+
+    // VVIQ Block 3
+    var vividnessTrials3 = {
+        type: jsPsychSurveyLikert,
+        preamble: "<div><p class><strong>Think of the front of a shop which you often go to. Consider carefully the picture that comes before your mind's eye. Indicate how vividly you imagine:</strong></p></div>",
+        questions: [
+            {
+                prompt: "The overall appearance of the shop from the opposite side of the road.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "A window display including colors, shapes, and details of individual items for sale.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "You are near the entrance. The color, shape, and details of the door.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "You enter the shop and go to the counter. The counter assistance serves you. Money changes hands.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            }
+        ],
+        post_trial_gap: 500
+    };
+
+    // VVIQ Block 4
+    var vividnessTrials4 = {
+        type: jsPsychSurveyLikert,
+        preamble: "<div><p class><strong>Think of a country scene which involves trees, mountains, and a lake. Consider carefully the picture that comes before your mind's eye. Indicate how vividly you imagine:</strong></p></div>",
+        questions: [
+            {
+                prompt: "The contours of the landscape.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "The color and shape of the trees.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "The color and shape of the lake.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            },
+            {
+                prompt: "A strong wind blows on the trees and the lake causing waves.", 
+                labels: vividnessLabels, 
+                required: true, 
+                horizontal: true
+            }
+        ]
+    };
+
+    /*--------------------------------------------DEBRIEF--------------------------------------------*/
+
+
+    // debrief for post-experiment; saves local file
+    var debrief_block = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function() {
+
+            jsPsych.data.get().localSave('csv','mydata.csv');
+
+            return `<p>Press any key to complete the experiment. Thank you!</p>`;
+
+        },
+    };
+
+    /*--------------------------------------------TIMELINE SIMPLIFICATION--------------------------------------------*/
+
+    // timeline images study block, with probe logic
+    var imagesBlock = {
+        timeline: [
+            probeProbabilityFxn,
+            imagePresent,
+            imagePresent,
+            after2,
+            imagePresent,
+            after3
+      ],
+    };
+
+    // timeline words study block, with probe logic
+    var wordsBlock = {
+        timeline: [
+            probeProbabilityFxn,
+            wordPresent,
+            wordPresent,
+            after2,
+            wordPresent,
+            after3
+      ],
+    };
+
+    //randomizing block order
+    var blockArray = [imagesBlock, wordsBlock];
+    
+    var randomBlocks = jsPsych.randomization.sampleWithoutReplacement(blockArray, 2);
+
+    studyBlock1 = randomBlocks[0];
+
+    studyBlock2 = randomBlocks[1];
+
+    // loop to produce 30 total stimuli (10 instances) of each block
+    var studyTimeline1 = {
+        timeline: [studyBlock1],
+        sample: {
+            type: 'fixed-repetitions',
+            size: 10
+        }
+    };
+
+    var studyTimeline2 = {
+        timeline: [studyBlock2],
+        sample: {
+            type: 'fixed-repetitions',
+            size: 10
+        }
+    };
+
+    // pushes all previous stimuli and new FOILs to recognition timeline (60 of each type); matches order of study phase blocks
+    if (studyBlock1 == imagesBlock) {
+        var recogTimeline1 = {
+            timeline: [recognitionImages],
+            sample: {
+                type: 'fixed-repetitions',
+                size: 60
+            }
+        }
+        var recogTimeline2 = {
+            timeline: [recognitionWords],
+            sample: {
+                type: 'fixed-repetitions',
+                size: 60
+            }
+        }
+    } else {
+        var recogTimeline1 = {
+            timeline: [recognitionWords],
+            sample: {
+                type: 'fixed-repetitions',
+                size: 60
+            }
+        }
+        var recogTimeline2 = {
+            timeline: [recognitionImages],
+            sample: {
+                type: 'fixed-repetitions',
+                size: 60
+            }
+        }
+    };
+    
+    // combines all wisdom questions into a single item
+    var wisdomQuestions = {
+        timeline: [
+            wisdomQuestions1,
+            wisdomQuestions2
+        ]
+    };
+    // combines all vividness questions into a single item
+    var VVIQ = {
+        timeline: [
+            vividnessInstructions,
+            vividnessTrials1,
+            vividnessTrials2,
+            vividnessTrials3,
+            vividnessTrials4
+        ]
+    };
+
+    // randomizes questionnaire order
+    var scaleArray = [wisdomQuestions, VVIQ];
+    
+    var randomScales = jsPsych.randomization.sampleWithoutReplacement(scaleArray, 2);
+    
+    scale1 = randomScales[0];
+
+    scale2 = randomScales[1];
+
+
+    /*--------------------------------------------TIMELINE PUSHES--------------------------------------------*/
+
+
+    // introductory instructions
+    timeline.push(
+        preload,
+        welcome,
+        consentForm,
+        demographics,
+        instructionsPreProbe,
+        probeQuestions,
+        probeExamples,
+        encodingIntro);
+
+    // study phase
+    timeline.push(
+        studyInstructions,
+        studyTimeline1,
+        studyInstructions,
+        studyTimeline2);
+
+    // digit-span task
+
+
+    // recognition phase
+    timeline.push(
+        recogTimeline1,
+        recogTimeline2);
+
+    // post-questionnaires + debrief
+    timeline.push(
+        scale1,
+        scale2,
+        debrief_block);
+
+    // runs the experiment
+    jsPsych.run(timeline);
+
+  </script>
+</html>
