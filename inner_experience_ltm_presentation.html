@@ -13,6 +13,7 @@
     <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.4"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
     <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
     <style>
     </style>
@@ -412,6 +413,12 @@
         // don't stop the experiment if there are file loading errors or if loading times out
         continue_after_error: true 
     };
+
+    // makes experiment fullscreen
+    var enterFullscreen = {
+      type: jsPsychFullscreen,
+      fullscreen_mode: true
+    };
     
     // welcome message for users
     var welcome = {
@@ -608,19 +615,162 @@
     /*--------------------------------------------DIGIT-SPAN TASK--------------------------------------------*/
 
 
+    var instructionsDigitSpan = {
+      type: jsPsychInstructions,
+      pages: [
+        "You have finished the study phase and will now complete a digit span task. <br> In this task, you will have to remember a sequence of numbers presented on the screen one after the other.<br> At the end of each trial, type out the numbers in the correct order. <br><br><u>Example:</u> if the sequence is '7 4 5 1', enter '7451' in this exact order, with no spaces or commas separating each digit.<br><br>",
+        "If you are ready, you may press 'Next' to start the task. If not, go back and re-read the instructions.<br><br>",
+      ],
+      show_clickable_nav: true,
+    };
 
+    //creating functions and vars for the digit span task.
+    var randomNumber;
+    var digits = [];
+    var digitsLength;
+    var sequenceLength = 3; //starts at a sequence length of 3
+    var incorrectTally = 0; //if two wrong in a row, then sequence length decreases by 1. if correct, incorrectTally resets to 0.
+
+    function selectRandomDigits() {
+      digits = []; //clears array of digits
+      digitsLength = 0;
+      const possibleNumbers = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+      ];
+      digits = jsPsych.randomization.sampleWithoutReplacement(
+        possibleNumbers,
+        sequenceLength
+      ); //fills digits array with random, unique selections from possibleNumbers.
+      randomNumber = ""; //sets randomNumber as an empty string.
+      for (let i = 0; i < digits.length; i++) {
+        randomNumber += digits[i]; //defines randomNumber as the number in a non-array format.
+      }
+      digitsLength = digits.length; //saves the number of digits in digitsLength.
+      //console.log(randomNumber);
+      //console.log(digits);
+      //console.log(digitsLength);
+    }
+
+    var selectRandomDigitsFxn = {
+      type: jsPsychCallFunction,
+      func: selectRandomDigits,
+    };
+
+    var digitSelection = -1;
+    var digitTrial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function () {
+        digitSelection += 1; //every time this runs, add one to digitSelection.
+        return (
+          '<div style="font-size:70px;">' + digits[digitSelection] + "</div>" //prints digits in array; see loop below.
+        );
+      },
+      choices: "NO_KEYS",
+      trial_duration: 1000,
+      post_trial_gap: 0,
+    };
+
+    var digitTrialNode = {
+      timeline: [digitTrial],
+      loop_function: function () {
+        if (digitSelection + 1 === digitsLength) {
+          digitSelection = -1;
+          return false;
+        } else {
+          return true;
+        }
+      },
+    };
+
+    var digitRecall = {
+      type: jsPsychSurveyText,
+      questions: [
+        {
+          prompt:
+            "List the digits in order, with no spaces or commas separating each one.",
+          name: "digitAnswer",
+        },
+      ],
+      data: {
+        randomNum: function () {
+          return randomNumber; //saves the number in data export.
+        },
+        length: function () {
+          return digitsLength; //saves the digit length in data export.
+        },
+      },
+    };
+
+    var recallFeedback = {
+      type: jsPsychHtmlKeyboardResponse,
+      trial_duration: 1000,
+      stimulus: function () {
+        var recallData = jsPsych.data.getLastTrialData();
+        //console.log(recallData);
+        if (
+          recallData.trials[0].response.digitAnswer ===
+          recallData.trials[0].randomNum
+        ) {
+          //in other words, if they were correct...
+          incorrectTally = 0; //reset incorrectTally to 0.
+          sequenceLength++; //add one to sequenceLength.
+          if (sequenceLength > 9) {
+            //if sequenceLenght goes above 9, reset it to 9.
+            sequenceLength = 9;
+          }
+          return '<div style="font-size:35px; color:rgb(0 220 0)"><b>Correct!</div>'; //tell subject they were correct!
+        } else {
+          incorrectTally++; //add one to incorrectTally.
+          if (incorrectTally >= 2) {
+            //if incorrectTally is 2, remove 1 from sequenceLength. they'll see less digits next trial.
+            sequenceLength -= 1;
+            if (sequenceLength < 3) {
+              //if sequenceLength is less than 3, reset it to 3.
+              sequenceLength = 3;
+            }
+          }
+          return '<div style="font-size:35px; color:rgb(240 0 0)"><b>Wrong.</div>'; //tell subject they were wrong. :(
+        }
+      },
+    };
+
+    var digitSpanStack = {
+      timeline: [
+        selectRandomDigitsFxn,
+        digitTrialNode,
+        digitRecall,
+        recallFeedback,
+      ],
+      repetitions: 20, //enter how many digit span trials you want here.
+    };
 
     
     /*--------------------------------------------RECOGNITION TEST--------------------------------------------*/
-
-
+    // instructions for recognition test
+    var recogInstructions = {
+      type: jsPsychInstructions,
+      pages: [
+      "You have completed the digit span task. You will now do a <b>recognition task</b>, where you'll see the words/images you studied earlier mixed with new words/images. <br> <br> You will indicate whether you think each word/image is OLD or NEW and your confidence. You have as long as you want to respond to each image.<br><br> If you're ready to begin the recognition task, you may move forward."
+      ],
+      show_clickable_nav: true,
+    };
+    
     // building recognition test for images, similar to study phase
     var recognitionImages = {
       type: jsPsychImageKeyboardResponse,
       stimulus: function() {
             return shuffledImages2[imageIndex2].stimulus;
         },
-        prompt: "<p>Indicate how confidently you believe you have previously seen the stimulus.<br><br>Press 1 for 'High-confidence new'.<br>Press 2 for 'Low-confidence new'.<br>Press 3 for 'Low-confidence old'.<br>Press 4 for 'High-confidence old'.</p>",
+        prompt: "<p>Indicate how confidently you believe you previously saw the stimulus (i.e., it is 'old').<br><br>Press 1 for 'High-confidence new'.<br>Press 2 for 'Low-confidence new'.<br>Press 3 for 'Low-confidence old'.<br>Press 4 for 'High-confidence old'.</p>",
         choices: ['1','2','3','4'],
         stimulus_width: 500,
         stimulus_height: 500,
@@ -647,7 +797,7 @@
       stimulus: function() {
             return '<p style = "font-size:50px;">' + shuffledWords2[wordIndex2].stimulus + '</p>';
         },
-        prompt: "<p>Indicate how confidently you believe you have previously seen the stimulus.<br><br>Press 1 for 'High-confidence new'.<br>Press 2 for 'Low-confidence new'.<br>Press 3 for 'Low-confidence old'.<br>Press 4 for 'High-confidence old'.</p>",
+        prompt: "<p>Indicate how confidently you believe you previously saw the stimulus (i.e., it is 'old').<br><br>Press 1 for 'High-confidence new'.<br>Press 2 for 'Low-confidence new'.<br>Press 3 for 'Low-confidence old'.<br>Press 4 for 'High-confidence old'.</p>",
         choices: ['1','2','3','4'],
         stimulus_width: 500,
         stimulus_height: 500,
@@ -777,12 +927,12 @@
     var vividnessInstructions = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `
-            <p>For each following scenario try to form a mental picture of the 
+            <p>For each following scenario, try to form a mental picture of the 
             people, objects, or setting.</p><p>Your task is to rate how vivid the mental
-            picture is using a 5-point scale. If you do not have a</p><p>visual image, 
-            rate vividness as '1'.
+            picture is using a 5-point scale.</p><p>If you do not have a visual image, 
+            rate vividness as '1'.</p>
             <div>
-                <p class='small'>Only use '5' for mental pictures that are as vivid as <strong>real seeing</strong></p>.
+                <p class='small'>Only use '5' for mental pictures that are as vivid as <strong>real seeing</strong>.</p>
             </div>
             <p>The rating scale is as follows:</p>
             <p>1. No image at all, I only “know” I am thinking of the object</p>
@@ -1060,6 +1210,7 @@
 
     // introductory instructions
     timeline.push(
+        enterFullscreen,
         preload,
         welcome,
         consentForm,
@@ -1078,9 +1229,13 @@
 
     // digit-span task
 
+    timeline.push(
+      instructionsDigitSpan, 
+      digitSpanStack);
 
     // recognition phase
     timeline.push(
+        recogInstructions,
         recogTimeline1,
         recogTimeline2);
 
