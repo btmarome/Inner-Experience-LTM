@@ -759,7 +759,7 @@
     var recogInstructions = {
       type: jsPsychInstructions,
       pages: [
-      "You have completed the digit span task. You will now do a <b>recognition task</b>, where you'll see the words/images you studied earlier mixed with new words/images. <br> <br> You will indicate whether you think each word/image is OLD or NEW and your confidence. You have as long as you want to respond to each image.<br><br> If you're ready to begin the recognition task, you may move forward."
+      "You have completed the digit span task. You will now do a <b>recognition task</b>, where you'll see the words/images you studied earlier mixed with new words/images. <br> <br> You will indicate whether you think each word/image is OLD or NEW and your confidence. <br><br>OLD means that you have seen that stimulus before, during the study phase. NEW means that you did not see that stimulus before. <br><br>You have as long as you want to respond to each image.<br><br> If you're ready to begin the recognition task, you may move forward."
       ],
       show_clickable_nav: true,
     };
@@ -819,6 +819,13 @@
         }
     };
 
+    var recogEnd = {
+      type: jsPsychInstructions,
+      pages: [
+      "You have completed the recognition test. You may move forward to complete the final questionnaires."
+      ],
+      show_clickable_nav: true,
+    };
     
     /*--------------------------------------------POST-QUESTIONNAIRES--------------------------------------------*/
 
@@ -1228,16 +1235,17 @@
         studyTimeline2);
 
     // digit-span task
-
     timeline.push(
       instructionsDigitSpan, 
       digitSpanStack);
+
 
     // recognition phase
     timeline.push(
         recogInstructions,
         recogTimeline1,
-        recogTimeline2);
+        recogTimeline2,
+        recogEnd);
 
     // post-questionnaires + debrief
     timeline.push(
