@@ -638,7 +638,7 @@
             choices: ['I Agree']
         };
 
-    // gathering email and other demographics to be deidentified later; email is for gift card distribution
+    // gathering demographics to be de-identified later
     var demographics = {
         type: jsPsychSurveyHtmlForm,
         preamble: "<p>Please respond to the following questions:</p>",
@@ -785,14 +785,14 @@
     var after4 = {
         timeline: [probeQuestions],
         conditional_function: function () {
-          return probabilityMW <= 0.33;
+          return probabilityMW < 0.33;
         }
     };
 
     var after5 = {
         timeline: [probeQuestions],
         conditional_function: function () {
-            return probabilityMW > 0.33 && probabilityMW < 0.67;
+            return probabilityMW >= 0.33 && probabilityMW < 0.67;
         }
     };
 
